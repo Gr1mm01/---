@@ -78,15 +78,14 @@ class TicTacToeApp:
         self.root.configure(bg="#ffffff")
         self.root.resizable(False, False)
 
-        # Переменные состояния
         self.board = [""] * 9
         self.human = "X"
         self.ai = "O"
         self.current_player = "X"
         self.scores = {"X": 0, "Tie": 0, "O": 0}
         self.ai_engine = TicTacToeAI(self.ai, self.human)
-
-        # Настройка шрифтов и сочных цветов
+       
+        # Настройка шрифтов
         self.font_main = ("Helvetica", 12)
         self.font_title = ("Helvetica", 18, "bold")
         self.color_x = "#ef233c"  # Яркий красный
@@ -97,7 +96,7 @@ class TicTacToeApp:
 
         self.start_frame.pack(expand=True, fill="both")
 
-    # --- СТАРТОВЫЙ ЭКРАН ---
+    #Экран
     def _create_start_screen(self):
         self.start_frame = tk.Frame(self.root, bg="#ffffff")
 
@@ -115,14 +114,14 @@ class TicTacToeApp:
         self.start_frame.pack_forget()
         self.game_frame.pack(expand=True, fill="both")
 
-    # --- ИГРОВОЙ ЭКРАН ---
+    #Игра
     def _create_game_screen(self):
         self.game_frame = tk.Frame(self.root, bg="#ffffff")
 
-        # Заголовок
+        #Заголовок
         tk.Label(self.game_frame, text="Игрок vs ИИ", font=self.font_title, bg="#ffffff", fg="#2b2d42").pack(pady=(20, 10))
 
-        # Выбор сложности
+        #Выбор сложности
         tk.Label(self.game_frame, text="Уровень сложности ИИ", font=("Helvetica", 10), fg="#777777",
                  bg="#ffffff").pack()
         diff_frame = tk.Frame(self.game_frame, bg="#ffffff")
@@ -136,7 +135,7 @@ class TicTacToeApp:
                 relief="solid", bd=1, font=("Helvetica", 10), width=8, cursor="hand2"
             ).pack(side="left", padx=5)
 
-        # Счёт
+        #Счёт
         score_frame = tk.Frame(self.game_frame, bg="#ffffff")
         score_frame.pack(pady=10)
 
@@ -150,12 +149,11 @@ class TicTacToeApp:
             tk.Label(col, text=text, font=("Helvetica", 9), fg="#777777", bg="#ffffff").pack()
             self.score_labels[key] = lbl_val
 
-        # Статус
         self.status_label = tk.Label(self.game_frame, text="Ваш ход — вы играете за X", font=self.font_main,
                                      bg="#ffffff", fg="#2b2d42")
         self.status_label.pack(pady=(10, 20))
 
-        # Игровое поле
+        #Игровое поле
         board_container = tk.Frame(self.game_frame, bg="#ffffff")
         board_container.pack()
 
@@ -171,7 +169,7 @@ class TicTacToeApp:
             btn.grid(row=row, column=col, padx=3, pady=3)
             self.buttons.append(btn)
 
-        # Кнопка "Новая игра"
+        # "Новая игра"
         reset_btn = tk.Button(
             self.game_frame, text="↺ новая игра", font=("Helvetica", 12),
             bg="#f0f0f0", relief="solid", bd=1, width=15, cursor="hand2",
@@ -179,7 +177,6 @@ class TicTacToeApp:
         )
         reset_btn.pack(pady=30)
 
-    # --- ЛОГИКА ---
     def _on_cell_click(self, index):
         if self.board[index] == "" and self.current_player == self.human:
             self._make_move(index, self.human)
@@ -190,7 +187,7 @@ class TicTacToeApp:
 
     def _make_move(self, index, player):
         self.board[index] = player
-        # Трюк тут: используем disabledforeground, чтобы заблокированная кнопка не серела
+        # чтобы заблокированная кнопка не серела
         color = self.color_x if player == "X" else self.color_o
         self.buttons[index].config(text=player, state="disabled", disabledforeground=color)
 
